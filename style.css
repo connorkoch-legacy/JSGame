@@ -41,5 +41,9 @@ canvas{
     display: block;
     width: 35vw;
     height: 35vw;
-    background-color: lightgray;
+    /*background-color: lightgray;*/
+}
+
+body {
+  background-color: #E0FFE0
 }
