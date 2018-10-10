@@ -1,0 +1,45 @@
+#main{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 300px;
+    width: 35vw;
+}
+
+#newGame{
+    margin-top: 20px;
+    width: 100px;
+    height: 50px;
+}
+
+#score, #highscore{
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 70px;
+    background-color: lightgray;
+    float: right;
+    margin: 10px;
+}
+
+#score p, #highscore p{
+    text-align: center;
+    top: auto;
+    margin-top: 5px;
+}
+
+#instructions{
+    text-align: center;
+}
+
+canvas{
+    border: 1px solid black;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 35vw;
+    height: 35vw;
+    background-color: lightgray;
+}
