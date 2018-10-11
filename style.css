@@ -1,3 +1,80 @@
+p, h1, h2 {
+    font-family: "Verdana", Verdana, sans-serif;
+}
+
+p{
+    font-weight: bold;
+    color: green;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 80px;
+    margin: -20px;
+}
+
+h1 p{
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#a {
+    color: blue;
+    animation-name: animate2;
+    animation-duration: 6s;
+}
+
+#b {
+    color: green;
+    animation-name: animate0;
+    animation-duration: 6s;
+}
+
+#c {
+    color: red;
+    animation-name: animate4;
+    animation-duration: 6s;
+}
+
+#d {
+      color: yellow;
+      animation-name: animate8;
+      animation-duration: 6s;
+}
+
+@keyframes animate2 {
+    0%   {color:blue; font-size: 160px;}
+    25%  {color:green;}
+    50%  {color:red;}
+    75%  {color:yellow;}
+    100% {color:blue;}
+}
+
+@keyframes animate0 {
+    0%   {color:green; font-size: 160px;}
+    25%  {color:red;}
+    50%  {color:yellow;}
+    75%  {color:blue;}
+    100% {color:green;}
+}
+
+@keyframes animate4 {
+    0%   {color:red; font-size: 160px;}
+    25%  {color:yellow;}
+    50%  {color:blue;}
+    75%  {color:green;}
+    100% {color:red;}
+}
+
+@keyframes animate8 {
+    0%   {color:yellow; font-size: 160px;}
+    25%  {color:blue;}
+    50%  {color:green;}
+    75%  {color:red;}
+    100% {color:yellow;}
+}
+
 #main{
     position: relative;
     margin-left: auto;
@@ -10,16 +87,23 @@
     margin-top: 20px;
     width: 100px;
     height: 50px;
+    background-color: red;
+}
+
+#newGame p{
+    color: lightblue;
+    font-size: 15px;
 }
 
 #score, #highscore{
     display: inline-block;
     position: relative;
-    width: 80px;
+    width: 100px;
     height: 70px;
     background-color: lightgray;
     float: right;
-    margin: 10px;
+    margin: 10px 5px 10px 5px;
+    border-radius: 20px;
 }
 
 #score p, #highscore p{
@@ -45,5 +129,5 @@ canvas{
 }
 
 body {
-  background-color: #E0FFE0
+  background-color: #ffffbb
 }
