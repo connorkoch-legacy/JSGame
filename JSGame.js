@@ -28,7 +28,7 @@ class Tile {
     this.color = "white";
     this.element = document.createElement('div');
     this.element.textContent = value;
-    this.element.style.backgroundColor = this.color;
+    this.element.classList.add(`tile${value}`);
   }
 
   doubleValue() {
@@ -87,12 +87,12 @@ class Game {
         }
       }
     }
-    
+
     //now that we have our moves to make, actually make them
     for(let move in movesToMake) {
       let myMove = movesToMake[move]
       this._moveTile(myMove.old.row, myMove.old.col, myMove.new.row, myMove.new.col);
-      
+
       if(myMove.combine && myMove.combine === true) {
         this.gameBoard[myMove.new.row][myMove.new.col].doubleValue();
       }
@@ -210,7 +210,7 @@ class Game {
       this._addTile(parseInt(chosenTile.row), parseInt(chosenTile.col), this._pickInitVal());
     }
 
-    
+
   }
 
   _addTile(row, col, val) {
@@ -228,7 +228,7 @@ class Game {
     if(oldTile) {
       parentDiv.removeChild(oldTile.element);
     }
-    
+
     let tile = this.gameBoard[startRow][startCol];
     this.gameBoard[endRow][endCol] = tile;
     tile.row = endRow;
