@@ -1,5 +1,7 @@
 "use strict";
 
+var score = 0;
+
 const BOARD_SIZE = 4;
 
 const DIRECTION = Object.freeze({
@@ -39,6 +41,8 @@ class Tile {
     this.value = this.value * 2;
     this.element.textContent = this.value;
     this.element.classList.add(`value_${this.value}`);
+    score += this.value;
+    updateScore();
   }
 }
 
@@ -254,6 +258,7 @@ class Game {
 }
 
 function newGame() {
+  score = 0;
   if(window.game) {
     window.game.destroy()
     delete(window.game);
@@ -261,6 +266,12 @@ function newGame() {
 
   window.game = new Game(document.getElementById("gameBoard"));
   window.game.init()
+
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById("scoreContainer").textContent = score;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
