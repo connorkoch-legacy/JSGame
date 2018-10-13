@@ -30,7 +30,7 @@ class Tile {
     this.color = "white";
     this.element = document.createElement('div');
     this.element.textContent = value;
-    this.element.style.backgroundColor = this.color;
+    this.element.classList.add(`tile${value}`);
   }
 
   doubleValue() {
@@ -240,7 +240,7 @@ class Game {
     if(oldTile) {
       parentDiv.removeChild(oldTile.element);
     }
-    
+
     let tile = this.gameBoard[startRow][startCol];
     this.gameBoard[endRow][endCol] = tile;
     tile.row = endRow;
