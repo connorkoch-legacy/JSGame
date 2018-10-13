@@ -30,12 +30,15 @@ class Tile {
     this.color = "white";
     this.element = document.createElement('div');
     this.element.textContent = value;
-    this.element.classList.add(`tile${value}`);
+    this.element.classList.add("tile");
+    this.element.classList.add(`value_${this.value}`)
   }
 
   doubleValue() {
+    this.element.classList.remove(`value_${this.value}`)
     this.value = this.value * 2;
     this.element.textContent = this.value;
+    this.element.classList.add(`value_${this.value}`);
   }
 }
 
@@ -97,16 +100,10 @@ class Game {
       }
     }
   }
-
+  
   // wipe the tiles off the board for a reset
   destroy() {
-    for(let row in this.gameBoard) {
-      for(let cell in row) {
-        if(cell) {
-          this.gameElement.removeChild(cell.element);
-        }
-      }
-    }
+    this.gameElement.querySelectorAll(".row > .cell").forEach((cell) => cell.firstChild ?cell.removeChild(cell.firstChild) : null)  
   }
 
   getNumTiles() {
@@ -256,13 +253,22 @@ class Game {
   }
 }
 
+function newGame() {
+  if(window.game) {
+    window.game.destroy()
+    delete(window.game);
+  }
+
+  window.game = new Game(document.getElementById("gameBoard"));
+  window.game.init()
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   console.debug("Document loaded!");
 
   // bind the game object to the window for ease of debugging, and ensure it's a singleton
   if(!window.game) {
-    window.game = new Game(document.getElementById("gameBoard"));
-    window.game.init();
+    newGame()
 
     document.addEventListener("keydown", (e) => {
       console.debug("Key pressed!")
@@ -282,6 +288,10 @@ document.addEventListener("DOMContentLoaded", () => {
         default:
           //no-op
       }
-    })
+    });
+
+    document.getElementById("newGame").onclick = (_) => {
+      newGame();
+    }
   }
 });
