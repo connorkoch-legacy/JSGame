@@ -320,4 +320,9 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#gameWin").dblclick(function() {
       $("#gameWin").fadeOut(2000);
   });
+
 });
+function popUp() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}

@@ -16,7 +16,7 @@ h1 {
 h1 p{
     display: inline-block;
     margin-bottom: 10px;
-    margin-top: 10px;
+    margin-top: 0px;
 }
 
 #a {
@@ -88,14 +88,14 @@ h1 p{
 }
 
 #newGame{
-    margin-top: 30px;
+    margin-top: 15px;
     width: 100px;
     height: 50px;
-    background-color: red;
+    background-color: orange;
 }
 
 #newGame p{
-    color: lightblue;
+    color: white;
     font-size: 15px;
 }
 
@@ -224,5 +224,42 @@ h1 p{
 }
 
 body {
-  background-color: #ffffbb
+  background-color: #ffffcc
+}
+
+.instructions {
+    margin-top: 20px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: orange;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.instructions .popuptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+.instructions .show {
+    visibility: visible;
+    animation: fadeIn 1s
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
 }
