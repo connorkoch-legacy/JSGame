@@ -1,5 +1,6 @@
 "use strict";
 
+update_scores()
 var score = 0;
 
 const BOARD_SIZE = 4;
@@ -42,7 +43,7 @@ class Tile {
     this.element.textContent = this.value;
     this.element.classList.add(`value_${this.value}`);
     score += this.value;
-    updateScore();
+    updateLocalScore();
   }
 }
 
@@ -86,15 +87,15 @@ class Game {
         if(move) {
           tilesMoved = true;
           this._moveTile(move.old.row, move.old.col, move.new.row, move.new.col);
-      
+
           if(move.combine && move.combine === true) {
             this.gameBoard[move.new.row][move.new.col].doubleValue();
           }
         }
-        
+
       }
     }
-    
+
     // add a tile to a random location, but only if a move occurred
     if(tilesMoved) {
       this._dropRandomTiles(1)
@@ -104,10 +105,10 @@ class Game {
       }
     }
   }
-  
+
   // wipe the tiles off the board for a reset
   destroy() {
-    this.gameElement.querySelectorAll(".row > .cell").forEach((cell) => cell.firstChild ?cell.removeChild(cell.firstChild) : null)  
+    this.gameElement.querySelectorAll(".row > .cell").forEach((cell) => cell.firstChild ?cell.removeChild(cell.firstChild) : null)
   }
 
   getNumTiles() {
@@ -258,19 +259,20 @@ class Game {
 }
 
 function newGame() {
-  score = 0;
   if(window.game) {
-    window.game.destroy()
+    highscore(score);
+    window.game.destroy();
     delete(window.game);
   }
+  score = 0;
 
   window.game = new Game(document.getElementById("gameBoard"));
-  window.game.init()
+  window.game.init();
 
-  updateScore();
+  updateLocalScore();
 }
 
-function updateScore() {
+function updateLocalScore() {
   document.getElementById("scoreContainer").textContent = score;
 }
 

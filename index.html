@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="highscore.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="HighscoreAPI.js"></script>
     <script src="JSGame.js"></script>
 </head>
 <body>
@@ -14,7 +17,6 @@
         </h1>
         <div id="topBar">
             <button id="newGame"><p>New Game</p></button>
-            <div id="highscore"><p>High Score</p></div>
             <div id="score"><p>Score</p><div id="scoreContainer">0</div></div>
         </div>
         <div id="gameBoard">
@@ -46,6 +48,23 @@
         <div id="instructions">
             <h2>Instructions</h2>
         </div>
+        <div id="highdiv">
+			<table id="hightable">
+				<tr>
+					<th>User</th>
+					<th>Score</th>
+				</tr>
+
+			</table>
+			<table id="myhightable">
+				<tr>
+					<th colspan="2">Your High Score</th>
+				</tr>
+				<tr id="myhighscore">
+					<td colspan="2">You don't have one yet!</td>
+				</tr>
+			</table>
+		</div>
         <div id="gameWin">
 
         </div>
