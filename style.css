@@ -224,6 +224,7 @@ body {
 }
 
 .instructions {
+    position: relative;
     margin-top: 20px;
     cursor: pointer;
     color: white;
