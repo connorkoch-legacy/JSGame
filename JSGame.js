@@ -38,11 +38,15 @@ class Tile {
   }
 
   doubleValue() {
+    var won = false;
     this.element.classList.remove(`value_${this.value}`)
     this.value = this.value * 2;
     this.element.textContent = this.value;
     this.element.classList.add(`value_${this.value}`);
     score += this.value;
+    if(this.value === 2048){
+        this.getElementById("gameWin").style.display = "initial";
+    }
     updateLocalScore();
   }
 }
@@ -312,4 +316,8 @@ document.addEventListener("DOMContentLoaded", () => {
       newGame();
     }
   }
+
+  $("#gameWin").dblclick(function() {
+      $("#gameWin").fadeOut(2000);
+  });
 });

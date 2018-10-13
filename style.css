@@ -206,6 +206,23 @@ h1 p{
     background-color: #ff66ff;
 }
 
+#gameWin{
+    height: 400px;
+    width: 400px;
+    background-color: green;
+    position: absolute;
+    top: 26%;
+    left: 10%;
+    display: none;
+}
+
+#gameWin p{
+    padding: 0px;
+    text-align: center;
+    color: red;
+    font-size: 40px;
+}
+
 body {
   background-color: #ffffbb
 }
