@@ -252,7 +252,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.game = new Game(document.getElementById("gameBoard"));
     window.game.init();
 
-    document.addEventListener("keypress", (e) => {
+    document.addEventListener("keydown", (e) => {
+      console.debug("Key pressed!")
       switch(e.key) {
         case "ArrowUp":
           window.game.handleMove(DIRECTION.UP)
