@@ -1,5 +1,7 @@
 "use strict";
 
+const BOARD_SIZE = 4;
+
 const DIRECTION = Object.freeze({
   NONE: 0,
   UP: 1,
@@ -33,16 +35,16 @@ class Tile {
 
   doubleValue() {
     this.value = this.value * 2;
-    this.element.textContent = value;
+    this.element.textContent = this.value;
   }
 }
 
 class Game {
   constructor(gameElement) {
     this.gameElement = gameElement;
-    this.gameBoard = new Array(4);
-    for (let i in range(4)) {
-      this.gameBoard[i] = new Array(4);
+    this.gameBoard = new Array(BOARD_SIZE);
+    for (let i in range(BOARD_SIZE)) {
+      this.gameBoard[i] = new Array(BOARD_SIZE);
     }
   }
 
@@ -52,49 +54,46 @@ class Game {
   }
 
   handleMove(direction) {
-    //we need to figure out all movements in one pass, then make a second
-    // pass to actually perform those movements
-    let movesToMake = new Array();
+    let tilesMoved = false;
 
-    //this is a good spot to improve performance, if we need to
-    //its also ugly as hell so a refactor wouldn't be a bad idea in general
-    for(let row in range(4)) {
-      for(let col in range(4)) {
-        if(!this.gameBoard[row][col]) {
-          //fail fast for empty squares
-          continue;
-        }
+    for(let primary_axis in range(BOARD_SIZE)) {
+      for(let secondary_axis in range(BOARD_SIZE)) {
         let move;
         switch(direction) {
           case DIRECTION.UP:
-            move = this._handleMoveUp(row, col);
+            move = this._handleMoveUp(primary_axis, secondary_axis);
             break;
           case DIRECTION.LEFT:
-            move = this._handleMoveLeft(row, col);
+            move = this._handleMoveLeft(secondary_axis, primary_axis);
             break;
           case DIRECTION.DOWN:
-            move = this._handleMoveDown(row, col);
+            move = this._handleMoveDown(this._reverseAxis(primary_axis), secondary_axis);
             break;
           case DIRECTION.RIGHT:
-            move = this._handleMoveRight(row, col);
+            move = this._handleMoveRight(secondary_axis, this._reverseAxis(primary_axis));
             break;
           default:
             console.debug("Move called with invalid direction!")
             move = null;
         }
         if(move) {
-          movesToMake.push(move);
+          tilesMoved = true;
+          this._moveTile(move.old.row, move.old.col, move.new.row, move.new.col);
+      
+          if(move.combine && move.combine === true) {
+            this.gameBoard[move.new.row][move.new.col].doubleValue();
+          }
         }
+        
       }
     }
     
-    //now that we have our moves to make, actually make them
-    for(let move in movesToMake) {
-      let myMove = movesToMake[move]
-      this._moveTile(myMove.old.row, myMove.old.col, myMove.new.row, myMove.new.col);
-      
-      if(myMove.combine && myMove.combine === true) {
-        this.gameBoard[myMove.new.row][myMove.new.col].doubleValue();
+    // add a tile to a random location, but only if a move occurred
+    if(tilesMoved) {
+      this._dropRandomTiles(1)
+    } else {
+      if(this.getNumTiles() === BOARD_SIZE * BOARD_SIZE) {
+        console.debug("Game over!");
       }
     }
   }
@@ -110,6 +109,15 @@ class Game {
     }
   }
 
+  getNumTiles() {
+    return this.gameBoard.flatMap((row) => row.flatMap((elem) => elem ? 1 : 0)).length
+  }
+
+  // gets the reversed index (e.g. first -> last, last -> first)
+  _reverseAxis(axis) {
+    return BOARD_SIZE - axis - 1;
+  }
+
   _handleMoveUp(row, col) {
     let myComparator = (newRow, _) => {
       return newRow >= 0;
@@ -121,7 +129,7 @@ class Game {
 
   _handleMoveDown(row, col) {
     let myComparator = (newRow, _) => {
-      return newRow < 4;
+      return newRow < BOARD_SIZE;
     }
     let myMod = (row) => parseInt(row + 1);
 
@@ -130,7 +138,7 @@ class Game {
 
   _handleMoveRight(row, col) {
     let myComparator = (_, newCol) => {
-      return newCol < 4;
+      return newCol < BOARD_SIZE;
     }
     let myMod = (col) => parseInt(col + 1);
 
@@ -149,6 +157,12 @@ class Game {
   //janky-ass abstraction around movement generation
   __handleMove(row, col, comparator, modRow = IDENTITY, modCol = IDENTITY) {
     let myTile = this.gameBoard[row][col]
+
+    if(!myTile) {
+      // fail fast for empty tiles
+      return null;
+    }
+
     let newRow = modRow(row), newCol = modCol(col);
     let movement = null;
 
@@ -209,8 +223,6 @@ class Game {
 
       this._addTile(parseInt(chosenTile.row), parseInt(chosenTile.col), this._pickInitVal());
     }
-
-    
   }
 
   _addTile(row, col, val) {
