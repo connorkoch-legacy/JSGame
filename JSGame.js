@@ -45,7 +45,7 @@ class Tile {
     this.element.classList.add(`value_${this.value}`);
     score += this.value;
     if(this.value === 2048){
-        this.getElementById("gameWin").style.display = "initial";
+        document.getElementById("gameWin").style.display = "initial";
     }
     updateLocalScore();
   }
