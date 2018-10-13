@@ -98,10 +98,11 @@ class Game {
 
     // add a tile to a random location, but only if a move occurred
     if(tilesMoved) {
-      this._dropRandomTiles(1)
+      this._dropRandomTiles(1);
     } else {
       if(this.getNumTiles() === BOARD_SIZE * BOARD_SIZE) {
         console.debug("Game over!");
+        alert("Game over!");
       }
     }
   }
@@ -112,7 +113,11 @@ class Game {
   }
 
   getNumTiles() {
-    return this.gameBoard.flatMap((row) => row.flatMap((elem) => elem ? 1 : 0)).length
+    return this.gameBoard.flatMap((row) => {
+      return row.flatMap((elem) => elem ? 1 : 0);
+    }).reduce((acc, val) => {
+      return acc += val;
+    });
   }
 
   // gets the reversed index (e.g. first -> last, last -> first)
